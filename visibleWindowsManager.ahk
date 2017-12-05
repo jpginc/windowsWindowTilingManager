@@ -2,17 +2,19 @@
 {
 	visibleWindows := []
 	
-	__new(windowCreateAndCloseNotifier)
+	__new(windowCreateAndCloseNotifier, layoutManager)
 	{
 		windowCreateAndCloseNotifier.registerOpenCallback(func("VisibleWindowsManagerClass.handleNewWindow").bind(this))
 		windowCreateAndCloseNotifier.registerCloseCallback(func("VisibleWindowsManagerClass.handleClosedWindow").bind(this))
+		this.layoutManager := layoutManager
 		return this
 	}
 	
 	handleNewWindow(newId)
 	{
 		this.visibleWindows.Push(newId)
-		ToolTip, % "these windows are watched " arrayToString(this.visibleWindows)
+		;~ ToolTip, % "these windows are watched " arrayToString(this.visibleWindows)
+		this.triggerLayout()
 		Return	
 	}
 
@@ -28,8 +30,23 @@
 				deletedKeys.Insert(this.visibleWindows.delete(key))
 			}
 		}
-		ToolTip, % "these windows are watched " arrayToString(this.visibleWindows)
+		if(deletedKeys.maxIndex())
+		{
+			this.triggerLayout()
+		}
+		;~ ToolTip, % "these windows are watched " arrayToString(this.visibleWindows)
 
 		Return	
+	}
+	
+	triggerLayout()
+	{
+		positions := this.layoutManager.getSizeAndPositions(this.visibleWindows)
+		for key, window in this.visibleWindows
+		{
+			p := positions[A_Index]
+			WinMove, % "ahk_id " window, , % p.x, % p.y, % p.width, % p.height
+		}
+		return this
 	}
 }

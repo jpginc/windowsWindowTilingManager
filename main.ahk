@@ -5,7 +5,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent
 
 notifier := new WindowCreateAndCloseWatcherClass()
-manager := new VisibleWindowsManagerClass(notifier)
+manager := new VisibleWindowsManagerClass(notifier, new DefaultLayoutManagerClass())
 return
 
 
@@ -15,3 +15,5 @@ return
 #include newWindowNotifier.ahk
 #include visibleWindowsManager.ahk
 #include common.ahk
+#include layoutManager.ahk
+#include positionObject.ahk
