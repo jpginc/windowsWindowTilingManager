@@ -1,17 +1,24 @@
-﻿
-class NewWindowNotifierClass
+﻿class WindowCreateAndCloseWatcherClass
 {
 	static shellHookSetup := false
-	callbacks := []
+	openCallbacks := []
+	closeCallbacks := []
 	
 	__new()
 	{
 		return this.__setupShellhook()
 	}
 	
-	registerListener(callback)
+	registerOpenCallback(callback)
 	{
-		this.callbacks.Insert(callback)
+		this.openCallbacks.Insert(callback)
+		return this
+	}
+	
+	registerCloseCallback(callback)
+	{
+		this.closeCallbacks.Insert(callback)
+		return this
 	}
 
 	__setupShellhook()
@@ -24,14 +31,23 @@ class NewWindowNotifierClass
 			hWnd := WinExist()
 			DllCall( "RegisterShellHookWindow", UInt,hWnd )
 			MsgNum := DllCall( "RegisterWindowMessage", Str,"SHELLHOOK" )
-			OnMessage( MsgNum, func("NewWindowNotifierClass.newWindowCallback").bind(this))
+			OnMessage( MsgNum, func("WindowCreateAndCloseWatcherClass.newWindowCallback").bind(this))
 		}
 		return this
 	}
 	
-	notifyListeners(ahkWindowId)
+	notifyOpenListeners(ahkWindowId)
 	{
-		for index, callback in this.callbacks
+		for index, callback in this.openCallbacks
+		{
+			callback.call(ahkWindowId)
+		}
+		return this
+	}
+	
+	notifyCloseListeners(ahkWindowId)
+	{
+		for index, callback in this.closeCallbacks
 		{
 			callback.call(ahkWindowId)
 		}
@@ -40,10 +56,15 @@ class NewWindowNotifierClass
 	
 	newWindowCallback(wParam, lParam)
 	{
+		HSHELL_WINDOWDESTROYED := 2
 		HSHELL_WINDOWCREATED := 1
 		if (wParam == HSHELL_WINDOWCREATED)
 		{
-			funcObj := func("NewWindowNotifierClass.notifyListeners").bind(this, ahkWindowId := lParam) 
+			funcObj := func("WindowCreateAndCloseWatcherClass.notifyOpenListeners").bind(this, ahkWindowId := lParam) 
+			setTimer % funcObj,  -1
+		} else if (wParam == HSHELL_WINDOWDESTROYED)
+		{
+			funcObj := func("WindowCreateAndCloseWatcherClass.notifyCloseListeners").bind(this, ahkWindowId := lParam) 
 			setTimer % funcObj,  -1
 		}
 		return this
