@@ -3,9 +3,19 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent
+if(! A_IsAdmin)
+{
+    ;dll calls window movers will not work without admin
+    Run *RunAs "%A_ScriptFullPath%"  ; Requires v1.0.92.01+
+    ExitApp
+}
+
+
 
 notifier := new WindowCreateAndCloseWatcherClass()
-manager := new VisibleWindowsManagerClass(notifier, new DefaultLayoutManagerClass())
+filter := new WindowFilterClass()
+layout := new DefaultLayoutManagerClass()
+manager := new VisibleWindowsManagerClass(notifier, layout, filter)
 return
 
 
@@ -17,3 +27,5 @@ return
 #include common.ahk
 #include layoutManager.ahk
 #include positionObject.ahk
+#include windowObject.ahk
+#include windowFilter.ahk

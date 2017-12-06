@@ -1,0 +1,35 @@
+hotkey to stop tracking/start tracking a window (alt +t)
+hotkey to change the split location (alt jl)
+hotkey to move windows around (alt shift jk)
+hotkey to start tracking all visible windows 
+keep tracking but maximise/return to bay temporarily
+
+a way to filter windows e.g. ignore alert boxes etc
+	- a priority level so that you can blanked ignore an ahk_class for example but un-ignore specific windows
+	
+decide how to handle multiple monitors
+
+add the borderless thing to tracked windows
+
+add support for multiple desktops
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+underTest := WinExist("ahk_exe notepad.exe")
+test := new VirtualDesktopManagerClass()
+
+return 
+
+#d::
+{
+    MsgBox % test.isDesktopCurrentlyActive(undertest) "`n" undertest
+    return
+}
+
+#e::ExitApp
+
+#Include ../windows10DesktopManager/virtualDesktopManager.ahk
+
+debugger(a)
+{
+ return 
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

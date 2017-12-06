@@ -40,16 +40,17 @@
 	{
 		for index, callback in this.openCallbacks
 		{
-			callback.call(ahkWindowId)
+			callback.call(new WindowObjectClass("ahk_id " ahkWindowId))
 		}
 		return this
 	}
 	
-	notifyCloseListeners(ahkWindowId)
+	;todo figure out what paramater is passed to this function and if it is useful
+	notifyCloseListeners(notSureWhatThisIs)
 	{
 		for index, callback in this.closeCallbacks
 		{
-			callback.call(ahkWindowId)
+			callback.call(notSureWhatThisIs)
 		}
 		return this
 	}
