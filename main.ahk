@@ -22,6 +22,16 @@ manager.trackAllWindows()
 
 return
 
++#j:: 
+{
+    userActionManager.rotateWindowsLeft()
+    return
+}
++#k::
+{
+    userActionManager.rotateWindowsRight()
+    return
+}
 #j::
 {
     userActionManager.moveSplitLeft()

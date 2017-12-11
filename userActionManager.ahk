@@ -22,6 +22,18 @@
 		return this
 	}
 	
+	rotateWindowsLeft()
+	{
+		this.windowManager.rotateWindowsLeft()
+		return this
+	}
+	
+	rotateWindowsRight()
+	{
+		this.windowManager.rotateWindowsRight()
+		return this
+	}
+	
 	moveSplitLeft()
 	{
 		this.layoutManager.leftOffset += 100

@@ -31,6 +31,32 @@
 		return this
 	}
 	
+	rotateWindowsLeft()
+	{
+		toMove := ""
+		for key, obj in this.visibleWindows
+		{
+			toMove := key
+			break
+		}
+		temp := this.visibleWindows.delete(key)
+		this.visibleWindows.push(temp)
+		this.triggerLayout()
+		return this
+	}
+	
+	rotateWindowsRight()
+	{
+		temp := [this.visibleWindows.pop()]
+		for key, val in this.visibleWindows
+		{
+			temp.push(val)
+		}
+		this.visibleWindows := temp
+		this.triggerLayout()
+		return this
+	}
+	
 	isTracking(windowObj)
 	{
 		for key, obj in this.visibleWindows
