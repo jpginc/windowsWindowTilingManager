@@ -1,5 +1,5 @@
 ﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
+;#Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent
@@ -16,8 +16,22 @@ notifier := new WindowCreateAndCloseWatcherClass()
 filter := new WindowFilterClass()
 layout := new DefaultLayoutManagerClass()
 manager := new VisibleWindowsManagerClass(notifier, layout, filter)
+userActionManager := new UserActionManagerClass(manager, filter)
+
+manager.trackAllWindows()
+
 return
 
+#t::
+{
+    userActionManager.toggleManageActiveWindow()
+    return
+}
+#g::
+{
+    manager.trackAllWindows()
+    return
+}
 
 
 #d::ExitApp
@@ -29,3 +43,4 @@ return
 #include positionObject.ahk
 #include windowObject.ahk
 #include windowFilter.ahk
+#include userActionManager.ahk

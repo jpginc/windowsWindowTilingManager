@@ -28,10 +28,12 @@
 		WinGetPos, x, y, width, height, % this.friendlyHwnd
 		WinGetText, text, % this.friendlyHwnd
 		WinGetTitle, title, % this.friendlyHwnd
+		WinGetClass, class, % this.friendlyHwnd
 		WinGet, processId, PID, % this.friendlyHwnd
 		WinGet, processName, ProcessName, % this.friendlyHwnd
 		WinGet, minMaxState, MinMax, % this.friendlyHwnd
 		
+		this.class := class
 		this.x := x
 		this.y := y
 		this.width := width

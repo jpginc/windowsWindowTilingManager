@@ -18,13 +18,40 @@
 		return 
 	}
 	
-	handleNewWindow(newWindowObj)
+	trackAllWindows()
+	{
+		this.visibleWindows := []
+		
+		for key, windowObj in % this.getAllWindows()
+		{
+			this.handleNewWindow(windowObj, triggerLayout := false)
+			
+		}
+		this.triggerLayout()
+		return this
+	}
+	
+	getAllWindows()
+	{
+		WinGet, windows, list
+		allWindows := []
+		loop, % windows
+		{
+		  allWindows.push(new WindowObjectClass("ahk_id " windows%A_Index%))
+		}
+		return allWindows
+	}
+	
+	handleNewWindow(newWindowObj, doTriggerLayout := true)
 	{
 		if(this.windowFilter.shouldWindowBeManaged(newWindowObj))
 		{
 			this.visibleWindows.Push(newWindowObj)
 			;~ ToolTip, % "these windows are watched " arrayToString(this.visibleWindows)
-			this.triggerLayout()
+			if(doTriggerLayout) 
+			{
+				this.triggerLayout()
+			}
 		}
 		return this
 	}
