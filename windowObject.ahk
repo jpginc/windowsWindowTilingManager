@@ -13,6 +13,11 @@
 		return winExist(this.friendlyHwnd)
 	}
 	
+	restorePosition()
+	{
+		return this.move(this.x, this.y, this.width, this.height)
+	}
+	
 	move(x, y, width, height)
 	{
 		WinMove, % this.friendlyHwnd, , % x, % y, % width, % height

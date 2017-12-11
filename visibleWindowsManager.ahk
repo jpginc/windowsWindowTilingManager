@@ -31,6 +31,33 @@
 		return this
 	}
 	
+	isTracking(windowObj)
+	{
+		for key, obj in this.visibleWindows
+		{
+			if(obj.hwnd == windowObj.hwnd)
+			{
+				return true
+			}
+		}
+		return false
+	}
+	
+	stopTracking(windowObj)
+	{
+		for key, obj in this.visibleWindows
+		{
+			if(obj.hwnd == windowObj.hwnd)
+			{
+				obj.restorePosition()
+				this.visibleWindows.delete(key)
+				this.triggerLayout()
+				break
+			}
+		}
+		return this
+	}
+	
 	getAllWindows()
 	{
 		WinGet, windows, list
@@ -47,7 +74,6 @@
 		if(this.windowFilter.shouldWindowBeManaged(newWindowObj))
 		{
 			this.visibleWindows.Push(newWindowObj)
-			;~ ToolTip, % "these windows are watched " arrayToString(this.visibleWindows)
 			if(doTriggerLayout) 
 			{
 				this.triggerLayout()

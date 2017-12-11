@@ -10,8 +10,14 @@
 	toggleManageActiveWindow()
 	{
 		hwnd := WinExist("A")
-		this.filter.toggleUserOverride(new WindowObjectClass("ahk_id " hwnd))
-		this.windowManager.triggerLayout()
+		windowObj := new WindowObjectClass("ahk_id " hwnd)
+		if(this.windowManager.isTracking(windowObj)) {
+			this.filter.stopManagingWindow(windowObj)
+			this.windowManager.stopTracking(windowObj)
+		} else {
+			this.filter.startManagingWindow(windowObj)
+			this.windowManager.handleNewWindow(windowObj)
+		}
 		return this
 	}
 	
