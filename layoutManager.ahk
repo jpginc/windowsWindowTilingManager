@@ -1,5 +1,6 @@
 ﻿class DefaultLayoutManagerClass
 {
+	leftOffset := 0
 	__new()
 	{
 		return this
@@ -21,12 +22,12 @@
 			return [new PositionObjectClass(A_ScreenHeight, A_ScreenWidth, x:=0, y:=0)]
 		} else if(numberOfWindows == 2)
 		{
-			return  [new PositionObjectClass(A_ScreenHeight, A_ScreenWidth / 2, x:=0, y:=0)
-					, new PositionObjectClass(A_ScreenHeight, A_ScreenWidth / 2, x:=A_ScreenWidth/2, y:=0)]
+			return  [new PositionObjectClass(A_ScreenHeight, A_ScreenWidth / 2 - this.leftOffset, x:=0, y:=0)
+					, new PositionObjectClass(A_ScreenHeight, A_ScreenWidth / 2 + this.leftOffset, x:=A_ScreenWidth/2 - this.leftOffset, y:=0)]
 		} else 
 		{
-			main := [new PositionObjectClass(A_ScreenHeight, A_ScreenWidth / 2, x:=0, y:=0)
-					, new PositionObjectClass(A_ScreenHeight / 2, A_ScreenWidth / 2, x:=A_ScreenWidth/2, y:=0)]
+			main := [new PositionObjectClass(A_ScreenHeight, A_ScreenWidth / 2 - this.leftOffset, x:=0, y:=0)
+					, new PositionObjectClass(A_ScreenHeight / 2, A_ScreenWidth / 2 + this.leftOffset, x:=A_ScreenWidth/2 - this.leftOffset, y:=0)]
 			
 			return this.getRemainingPositions(main, numberOfWindows)
 		}
@@ -37,7 +38,7 @@
 		height := (A_ScreenHeight / 2) / (numberOfWindows - 2)
 		loop, % numberOfWindows -2
 		{
-			positions.push(new PositionObjectClass(height, A_ScreenWidth / 2, x:=A_ScreenWidth/2, (A_screenHeight / 2) + (height * (A_Index - 1))))
+			positions.push(new PositionObjectClass(height, A_ScreenWidth / 2 + this.leftOffset, x:=A_ScreenWidth/2  - this.leftOffset, (A_screenHeight / 2) + (height * (A_Index - 1))))
 		}
 		return positions
 	}

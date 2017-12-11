@@ -16,11 +16,22 @@ notifier := new WindowCreateAndCloseWatcherClass()
 filter := new WindowFilterClass()
 layout := new DefaultLayoutManagerClass()
 manager := new VisibleWindowsManagerClass(notifier, layout, filter)
-userActionManager := new UserActionManagerClass(manager, filter)
+userActionManager := new UserActionManagerClass(manager, filter, layout)
 
 manager.trackAllWindows()
 
 return
+
+#j::
+{
+    userActionManager.moveSplitLeft()
+    return
+}
+#k::
+{
+    userActionManager.moveSplitRight()
+    return
+}
 
 #t::
 {

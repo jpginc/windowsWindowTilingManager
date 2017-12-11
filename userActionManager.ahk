@@ -1,9 +1,10 @@
 ﻿class UserActionManagerClass
 {
-	__new(windowManager, filter)
+	__new(windowManager, filter, layoutManager)
 	{
 		this.filter := filter
 		this.windowManager := windowManager
+		this.layoutManager := layoutManager
 		return this
 	}
 	
@@ -18,6 +19,20 @@
 			this.filter.startManagingWindow(windowObj)
 			this.windowManager.handleNewWindow(windowObj)
 		}
+		return this
+	}
+	
+	moveSplitLeft()
+	{
+		this.layoutManager.leftOffset += 100
+		this.windowManager.triggerLayout()
+		return this
+	}
+	
+	moveSplitRight()
+	{
+		this.layoutManager.leftOffset -= 100
+		this.windowManager.triggerLayout()
 		return this
 	}
 	

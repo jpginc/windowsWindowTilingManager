@@ -1,7 +1,5 @@
-hotkey to stop tracking/start tracking a window (alt +t)
 hotkey to change the split location (alt jl)
 hotkey to move windows around (alt shift jk)
-hotkey to start tracking all visible windows 
 keep tracking but maximise/return to bay temporarily
 
 a way to filter windows e.g. ignore alert boxes etc
